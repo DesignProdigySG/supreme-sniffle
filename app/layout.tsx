@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Warm-Intro Graph",
+  title: "DP Marketing Intel",
   description: "Buying-group lookup and warm-intro path-finding over the who-do-we-know graph.",
 };
 

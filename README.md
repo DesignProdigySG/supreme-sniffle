@@ -1,4 +1,4 @@
-# warm-intro-graph
+# dp-marketing-intel
 
 A standalone POC: a property graph over "who do we know" and "who's in the
 buying group at an account." It covers the one genuinely graph-shaped slice
