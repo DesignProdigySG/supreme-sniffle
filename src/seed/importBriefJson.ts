@@ -2,14 +2,14 @@ import { readFileSync } from "node:fs";
 import { slugify } from "../lib/slugify";
 import { writeBuyingGroup } from "./writeBuyingGroup";
 
-interface WhenBuyingGroupEntry {
+export interface WhenBuyingGroupEntry {
   name: string;
   title: string;
   focus_area: string;
   status: string;
 }
 
-interface WhenAccountBrief {
+export interface WhenAccountBrief {
   account: {
     name: string;
     industry?: string;
@@ -32,10 +32,6 @@ function confirmationFor(status: string): string {
   return "likely";
 }
 
-export interface ImportBriefJsonOptions {
-  filePath: string;
-}
-
 export interface ImportBriefJsonResult {
   accountName: string;
   membersImported: number;
@@ -46,8 +42,7 @@ export interface ImportBriefJsonResult {
  * brief (structured JSON, not prose) — no AI extraction pass needed since
  * the buying_group array is already structured.
  */
-export async function importBriefJson({ filePath }: ImportBriefJsonOptions): Promise<ImportBriefJsonResult> {
-  const brief: WhenAccountBrief = JSON.parse(readFileSync(filePath, "utf-8"));
+export async function importBriefJsonData(brief: WhenAccountBrief): Promise<ImportBriefJsonResult> {
   const accountId = `account-${slugify(brief.account.name)}`;
 
   const membersImported = await writeBuyingGroup(
@@ -62,4 +57,13 @@ export async function importBriefJson({ filePath }: ImportBriefJsonOptions): Pro
   );
 
   return { accountName: brief.account.name, membersImported };
+}
+
+export interface ImportBriefJsonFileOptions {
+  filePath: string;
+}
+
+export async function importBriefJson({ filePath }: ImportBriefJsonFileOptions): Promise<ImportBriefJsonResult> {
+  const brief: WhenAccountBrief = JSON.parse(readFileSync(filePath, "utf-8"));
+  return importBriefJsonData(brief);
 }
