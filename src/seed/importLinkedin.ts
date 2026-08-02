@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { parse } from "csv-parse/sync";
 import { getDriver } from "../db/client";
+import { slugify } from "../lib/slugify";
 
 interface ConnectionRow {
   "First Name": string;
@@ -10,14 +11,6 @@ interface ConnectionRow {
   Company: string;
   Position: string;
   "Connected On": string;
-}
-
-function slugify(value: string): string {
-  return value
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
 }
 
 function linkedInIdFromUrl(url: string): string | undefined {

@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import Anthropic from "@anthropic-ai/sdk";
-import { getDriver } from "../db/client";
+import { writeBuyingGroup } from "./writeBuyingGroup";
 
 interface ExtractedMember {
   person_name: string;
@@ -63,14 +63,6 @@ async function extractMembers(briefText: string): Promise<ExtractedMember[]> {
   return (toolUse.input as { members: ExtractedMember[] }).members;
 }
 
-function slugify(value: string): string {
-  return value
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
-}
-
 export interface ExtractBriefOptions {
   filePath: string;
   accountId: string;
@@ -89,35 +81,16 @@ export async function extractBriefIntoGraph({
   const briefText = readFileSync(filePath, "utf-8");
   const members = await extractMembers(briefText);
 
-  const driver = getDriver();
-  const session = driver.session();
-  try {
-    await session.run(`MERGE (a:Account {id: $accountId}) ON CREATE SET a.name = $accountName`, {
-      accountId,
-      accountName,
-    });
+  const membersExtracted = await writeBuyingGroup(
+    accountId,
+    accountName,
+    members.map((m) => ({
+      name: m.person_name,
+      role: m.role,
+      confirmation: m.confirmation,
+      createdVia: "brief_extraction",
+    })),
+  );
 
-    for (const member of members) {
-      const personId = `person-${slugify(member.person_name)}`;
-      await session.run(
-        `MERGE (p:Person {id: $personId})
-         ON CREATE SET p.name = $name, p.is_internal = false, p.created_via = 'brief_extraction'
-         WITH p
-         MATCH (a:Account {id: $accountId})
-         MERGE (p)-[w:works_at]->(a)
-         SET w.role = $role, w.confirmation = $confirmation, w.start_date = coalesce(w.start_date, date())`,
-        {
-          personId,
-          name: member.person_name,
-          accountId,
-          role: member.role,
-          confirmation: member.confirmation,
-        },
-      );
-    }
-  } finally {
-    await session.close();
-  }
-
-  return { membersExtracted: members.length };
+  return { membersExtracted };
 }

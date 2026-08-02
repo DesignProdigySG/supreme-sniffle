@@ -10,6 +10,7 @@ export default function HomePage() {
       <nav className="nav-links">
         <Link href="/buying-group">Buying group lookup &rarr;</Link>
         <Link href="/warm-intro">Warm-intro path finder &rarr;</Link>
+        <Link href="/seed-brief">Seed a brief &rarr;</Link>
       </nav>
     </main>
   );
