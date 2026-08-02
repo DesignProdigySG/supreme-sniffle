@@ -1,0 +1,31 @@
+{
+  "name": "warm-intro-graph",
+  "version": "0.1.0",
+  "description": "POC: a property graph over who-do-we-know and buying-group relationships, for warm-intro path-finding and signal propagation.",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "warm-intro-graph": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "cli": "tsx src/cli.ts",
+    "setup-schema": "tsx src/db/setupSchema.ts",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.32.1",
+    "commander": "^12.1.0",
+    "csv-parse": "^5.5.6",
+    "dotenv": "^16.4.5",
+    "neo4j-driver": "^5.27.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
