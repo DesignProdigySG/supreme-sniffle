@@ -8,7 +8,7 @@ import { getBuyingGroup } from "./graph/buyingGroup";
 import { findShortestPath, findStrongestPath } from "./graph/warmIntro";
 
 const program = new Command();
-program.name("dp-marketing-intel").description("Seed and query the warm-intro graph.");
+program.name("yw-intel-graph-v1").description("Seed and query the warm-intro graph.");
 
 program
   .command("import-linkedin")

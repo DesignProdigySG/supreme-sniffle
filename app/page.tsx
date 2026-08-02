@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function HomePage() {
   return (
     <main className="container">
-      <h1>DP Marketing Intel</h1>
+      <h1>YW Intel Graph v1</h1>
       <p className="subtitle">
         Buying-group mapping and warm-intro path-finding over the who-do-we-know graph.
       </p>
