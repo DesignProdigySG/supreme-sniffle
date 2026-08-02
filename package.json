@@ -1,5 +1,5 @@
 {
-  "name": "dp-marketing-intel",
+  "name": "yw-intel-graph-v1",
   "version": "0.1.0",
   "description": "POC: a property graph over who-do-we-know and buying-group relationships, for warm-intro path-finding and signal propagation.",
   "private": true,

@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "DP Marketing Intel",
+  title: "YW Intel Graph v1",
   description: "Buying-group lookup and warm-intro path-finding over the who-do-we-know graph.",
 };
 
