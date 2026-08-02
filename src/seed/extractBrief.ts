@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import Anthropic from "@anthropic-ai/sdk";
-import { getDriver } from "../db/client.js";
+import { getDriver } from "../db/client";
 
 interface ExtractedMember {
   person_name: string;

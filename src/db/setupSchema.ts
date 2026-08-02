@@ -1,4 +1,4 @@
-import { getDriver, closeDriver } from "./client.js";
+import { getDriver, closeDriver } from "./client";
 
 // Property graph, not a fixed ontology: these constraints only guarantee
 // stable IDs for matching/merging during seeding. They don't constrain what

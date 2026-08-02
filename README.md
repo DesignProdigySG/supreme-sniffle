@@ -71,6 +71,23 @@ npx tsx src/cli.ts warm-intro --from person-yuan-wen --to person-target --strong
 strength (recency/frequency) instead, via APOC Dijkstra over the
 precomputed `distance` property.
 
+## Web UI
+
+A small Next.js app (`app/`) wraps the same buying-group/warm-intro queries
+as HTTP endpoints with simple forms on top, for demoing without the CLI:
+
+```
+npm run dev
+```
+
+- `/buying-group` — look up the current buying group at an account
+- `/warm-intro` — find a path between two people (fewest hops or `--strongest`)
+- `GET /api/buying-group?accountId=...`
+- `GET /api/warm-intro?from=...&to=...&strongest=true|false`
+
+It reads the same `NEO4J_URI`/`NEO4J_USERNAME`/`NEO4J_PASSWORD` env vars as
+the CLI. Seeding is still CLI-only — there's no import/extract UI.
+
 ## Status
 
 Design/staging project. Not yet shared with Jocelyn — share once it

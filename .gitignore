@@ -1,6 +1,10 @@
 node_modules/
 dist/
+.next/
+.vercel/
+*.tsbuildinfo
 .env
+.env*.local
 *.log
 data/*.csv
 !data/.gitkeep

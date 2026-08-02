@@ -1,5 +1,5 @@
-import { getDriver } from "../db/client.js";
-import type { PathHop, WarmIntroPath } from "./types.js";
+import { getDriver } from "../db/client";
+import type { PathHop, WarmIntroPath } from "./types";
 
 const MAX_HOPS = 6;
 

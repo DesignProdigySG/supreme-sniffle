@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { parse } from "csv-parse/sync";
-import { getDriver } from "../db/client.js";
+import { getDriver } from "../db/client";
 
 interface ConnectionRow {
   "First Name": string;

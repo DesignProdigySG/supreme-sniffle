@@ -4,28 +4,37 @@
   "description": "POC: a property graph over who-do-we-know and buying-group relationships, for warm-intro path-finding and signal propagation.",
   "private": true,
   "type": "module",
-  "bin": {
-    "warm-intro-graph": "./dist/cli.js"
-  },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "cli": "tsx src/cli.ts",
     "setup-schema": "tsx src/db/setupSchema.ts",
-    "typecheck": "tsc --noEmit -p tsconfig.json"
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "typecheck:web": "tsc --noEmit -p tsconfig.next.json"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.32.1",
     "commander": "^12.1.0",
     "csv-parse": "^5.5.6",
     "dotenv": "^16.4.5",
-    "neo4j-driver": "^5.27.0"
+    "neo4j-driver": "^5.27.0",
+    "next": "^16.2.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
+    "@types/react": "^19.0.1",
+    "@types/react-dom": "^19.0.2",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2"
   },
   "engines": {
     "node": ">=20"
+  },
+  "overrides": {
+    "postcss": "^8.5.25",
+    "sharp": "^0.35.3"
   }
 }

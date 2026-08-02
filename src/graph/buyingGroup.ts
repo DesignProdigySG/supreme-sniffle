@@ -1,5 +1,5 @@
-import { getDriver } from "../db/client.js";
-import type { BuyingGroupMember } from "./types.js";
+import { getDriver } from "../db/client";
+import type { BuyingGroupMember } from "./types";
 
 /**
  * Current buying group at an account: everyone with an open works_at edge

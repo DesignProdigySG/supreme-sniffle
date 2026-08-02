@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 import { Command } from "commander";
 import "dotenv/config";
-import { closeDriver } from "./db/client.js";
-import { importLinkedInConnections } from "./seed/importLinkedin.js";
-import { extractBriefIntoGraph } from "./seed/extractBrief.js";
-import { getBuyingGroup } from "./graph/buyingGroup.js";
-import { findShortestPath, findStrongestPath } from "./graph/warmIntro.js";
+import { closeDriver } from "./db/client";
+import { importLinkedInConnections } from "./seed/importLinkedin";
+import { extractBriefIntoGraph } from "./seed/extractBrief";
+import { getBuyingGroup } from "./graph/buyingGroup";
+import { findShortestPath, findStrongestPath } from "./graph/warmIntro";
 
 const program = new Command();
 program.name("warm-intro-graph").description("Seed and query the warm-intro graph.");
