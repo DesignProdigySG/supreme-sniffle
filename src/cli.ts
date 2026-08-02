@@ -4,6 +4,7 @@ import "dotenv/config";
 import { closeDriver } from "./db/client";
 import { importLinkedInConnections } from "./seed/importLinkedin";
 import { extractBriefIntoGraph } from "./seed/extractBrief";
+import { importBriefJson } from "./seed/importBriefJson";
 import { getBuyingGroup } from "./graph/buyingGroup";
 import { findShortestPath, findStrongestPath } from "./graph/warmIntro";
 
@@ -33,6 +34,17 @@ program
       accountName: opts.accountName,
     });
     console.log(`Extracted ${result.membersExtracted} buying-group member(s) into account "${opts.accountName}".`);
+  });
+
+program
+  .command("import-brief-json")
+  .description(
+    "Import a structured WHEN Layer Intelligence Engine account-brief JSON file (buying_group array) directly, no AI extraction needed.",
+  )
+  .requiredOption("--file <path>", "path to the brief .json file")
+  .action(async (opts) => {
+    const result = await importBriefJson({ filePath: opts.file });
+    console.log(`Imported ${result.membersImported} buying-group member(s) into account "${result.accountName}".`);
   });
 
 program

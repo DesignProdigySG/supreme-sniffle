@@ -6,5 +6,5 @@ dist/
 .env
 .env*.local
 *.log
-data/*.csv
+data/*
 !data/.gitkeep
