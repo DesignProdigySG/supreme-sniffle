@@ -11,7 +11,8 @@
     "cli": "tsx src/cli.ts",
     "setup-schema": "tsx src/db/setupSchema.ts",
     "typecheck": "tsc --noEmit -p tsconfig.json",
-    "typecheck:web": "tsc --noEmit -p tsconfig.next.json"
+    "typecheck:web": "tsc --noEmit -p tsconfig.next.json",
+    "prepare": "husky"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.32.1",
@@ -24,9 +25,12 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@secretlint/secretlint-rule-preset-recommend": "^13.0.4",
     "@types/node": "^22.10.2",
     "@types/react": "^19.0.1",
     "@types/react-dom": "^19.0.2",
+    "husky": "^9.1.7",
+    "secretlint": "^13.0.4",
     "tsx": "^4.19.2",
     "typescript": "^5.7.2"
   },
