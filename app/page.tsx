@@ -11,6 +11,7 @@ export default function HomePage() {
         <Link href="/buying-group">Buying group lookup &rarr;</Link>
         <Link href="/warm-intro">Warm-intro path finder &rarr;</Link>
         <Link href="/seed-brief">Seed a brief &rarr;</Link>
+        <Link href="/seed-linkedin">Seed LinkedIn connections &rarr;</Link>
       </nav>
     </main>
   );
