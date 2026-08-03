@@ -31,22 +31,21 @@ function stripPreamble(csvText: string): string {
   return lines.slice(headerIndex).join("\n");
 }
 
-export interface ImportLinkedInOptions {
-  filePath: string;
-  ownerPersonId: string;
-}
-
 export interface ImportLinkedInResult {
   connectionsSeen: number;
   rowsProcessed: number;
 }
 
-export async function importLinkedInConnections({
-  filePath,
+export interface ImportLinkedInTextOptions {
+  csvRaw: string;
+  ownerPersonId: string;
+}
+
+export async function importLinkedInConnectionsFromText({
+  csvRaw,
   ownerPersonId,
-}: ImportLinkedInOptions): Promise<ImportLinkedInResult> {
-  const raw = readFileSync(filePath, "utf-8");
-  const csvText = stripPreamble(raw);
+}: ImportLinkedInTextOptions): Promise<ImportLinkedInResult> {
+  const csvText = stripPreamble(csvRaw);
   const rows: ConnectionRow[] = parse(csvText, {
     columns: true,
     skip_empty_lines: true,
@@ -100,4 +99,17 @@ export async function importLinkedInConnections({
   }
 
   return { connectionsSeen: rows.length, rowsProcessed };
+}
+
+export interface ImportLinkedInFileOptions {
+  filePath: string;
+  ownerPersonId: string;
+}
+
+export async function importLinkedInConnections({
+  filePath,
+  ownerPersonId,
+}: ImportLinkedInFileOptions): Promise<ImportLinkedInResult> {
+  const csvRaw = readFileSync(filePath, "utf-8");
+  return importLinkedInConnectionsFromText({ csvRaw, ownerPersonId });
 }
