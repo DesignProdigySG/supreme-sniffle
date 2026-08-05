@@ -20,6 +20,14 @@ function toPath(nodes: any[], relationships: any[]): WarmIntroPath {
  * Fewest-hops path from one person to another, over knows/interacted_with/
  * referred_by edges (relationship direction ignored — an intro can be asked
  * for in either direction).
+ *
+ * Deliberately avoids Cypher's shortestPath() function — it returned zero
+ * rows against real seeded data even though the equivalent plain MATCH
+ * found the path instantly (reproduced directly in the Aura Query
+ * browser). shortestPath() has a documented history of exactly this kind
+ * of unreliability with multi-type relationship alternation; ORDER BY
+ * length(path) LIMIT 1 over a plain variable-length MATCH is the standard
+ * workaround and isn't subject to the same planner path.
  */
 export async function findShortestPath(fromPersonId: string, toPersonId: string): Promise<WarmIntroPath | null> {
   const driver = getDriver();
@@ -27,8 +35,10 @@ export async function findShortestPath(fromPersonId: string, toPersonId: string)
   try {
     const result = await session.run(
       `MATCH (from:Person {id: $fromPersonId}), (to:Person {id: $toPersonId})
-       MATCH path = shortestPath((from)-[:knows|interacted_with|referred_by*1..${MAX_HOPS}]-(to))
-       RETURN path`,
+       MATCH path = (from)-[:knows|interacted_with|referred_by*1..${MAX_HOPS}]-(to)
+       RETURN path
+       ORDER BY length(path) ASC
+       LIMIT 1`,
       { fromPersonId, toPersonId },
     );
     if (result.records.length === 0) return null;
