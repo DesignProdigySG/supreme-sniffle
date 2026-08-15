@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import PersonPicker from "@/app/components/PersonPicker";
 
 interface Hop {
   person: { id: string; name: string; is_internal: boolean };
@@ -24,6 +25,10 @@ export default function WarmIntroPage() {
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (!from || !to) {
+      setError("Pick a person from the dropdown for both fields.");
+      return;
+    }
     setLoading(true);
     setError(null);
     setPath(null);
@@ -50,14 +55,8 @@ export default function WarmIntroPage() {
       <h1>Warm-intro path finder</h1>
       <p className="subtitle">Shortest — or strongest — path from one person to another.</p>
       <form onSubmit={handleSubmit} className="form">
-        <label>
-          From (Person ID)
-          <input value={from} onChange={(e) => setFrom(e.target.value)} placeholder="person-yuan-wen" required />
-        </label>
-        <label>
-          To (Person ID)
-          <input value={to} onChange={(e) => setTo(e.target.value)} placeholder="person-target" required />
-        </label>
+        <PersonPicker label="From" placeholder="Yuan Wen" value={from} onChange={setFrom} />
+        <PersonPicker label="To" placeholder="Jocelyn" value={to} onChange={setTo} />
         <label className="checkbox">
           <input type="checkbox" checked={strongest} onChange={(e) => setStrongest(e.target.checked)} />
           Optimize for connection strength instead of fewest hops
