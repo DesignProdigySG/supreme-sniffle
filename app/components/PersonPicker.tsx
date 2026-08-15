@@ -90,8 +90,6 @@ export default function PersonPicker({ label, placeholder, value, onChange }: Pe
             margin: 0,
             padding: 0,
             listStyle: "none",
-            background: "var(--background, #fff)",
-            border: "1px solid var(--border, #ccc)",
             borderRadius: 4,
             maxHeight: 200,
             overflowY: "auto",
