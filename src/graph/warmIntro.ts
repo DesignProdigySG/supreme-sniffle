@@ -1,7 +1,16 @@
+import neo4j from "neo4j-driver";
 import { getDriver } from "../db/client";
 import type { PathHop, WarmIntroPath } from "./types";
 
 const MAX_HOPS = 6;
+
+// Cypher integer literals (e.g. `k.weight = 1`) come back from the driver as
+// neo4j.Integer objects, not plain JS numbers — JSON.stringify serializes
+// them as {low, high}, which React then refuses to render as a JSX child.
+function toNumber(value: unknown): number | undefined {
+  if (value === undefined || value === null) return undefined;
+  return neo4j.isInt(value) ? value.toNumber() : (value as number);
+}
 
 function toPath(nodes: any[], relationships: any[]): WarmIntroPath {
   const hops: PathHop[] = relationships.map((rel, i) => ({
@@ -11,7 +20,7 @@ function toPath(nodes: any[], relationships: any[]): WarmIntroPath {
       is_internal: nodes[i + 1].properties.is_internal,
     },
     relationship: rel.type,
-    weight: rel.properties.weight,
+    weight: toNumber(rel.properties.weight),
   }));
   return { hops, length: hops.length };
 }
